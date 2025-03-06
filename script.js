@@ -1,22 +1,32 @@
 //your JS code here. If required.
 document.getElementById("btn").addEventListener("click", async function () {
-    const text = document.getElementById("text").value;
-    const delay = parseInt(document.getElementById("delay").value);
-    const outputDiv = document.getElementById("output");
-    
+    // Get input values
+    let text = document.getElementById("text").value;
+    let delay = document.getElementById("delay").value;
+    let output = document.getElementById("output");
+
+    // Clear previous output
+    output.innerHTML = "";
+
+    // Convert delay to a number
+    delay = Number(delay);
+
     // Validate input
     if (!text) {
-        outputDiv.innerText = "Please enter a message.";
+        alert("Please enter a message.");
         return;
     }
     if (isNaN(delay) || delay < 0) {
-        outputDiv.innerText = "Please enter a valid delay time (milliseconds).";
+        alert("Please enter a valid delay (non-negative number).");
         return;
     }
-    
-    outputDiv.innerText = "Waiting...";
-    
-    await new Promise(resolve => setTimeout(resolve, delay));
-    
-    outputDiv.innerText = text;
+
+    // Function to simulate delay
+    function delayMessage(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // Wait for the delay, then display message
+    await delayMessage(delay);
+    output.innerHTML = text;
 });
